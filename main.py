@@ -1,11 +1,13 @@
 import time
-from core.config import BRIDGE_CONTRACT_ABI, BRIDGE_CONTRACT_ADDRESS, REDDIO_RPC_URL, REDDIO_COIN_NAME, SEPOLIA_CHAIN_ID, SEPOLIA_RPC_URL
-from core.utils import connect_to_web3, get_account, random_between, retry
+from core.config import BRIDGE_CONTRACT_ABI, BRIDGE_CONTRACT_ADDRESS, REDDIO_DEPLOY_CONTRACT, REDDIO_RPC_URL, REDDIO_COIN_NAME, SEPOLIA_CHAIN_ID, SEPOLIA_RPC_URL
+from core.contract import deploy_contract
+from core.utils import connect_to_web3, generate_random_name, get_account, random_between, retry
 
 
 
-def send_eth(account, amount): 
+def send_eth(private_key, amount): 
   
+  account = get_account(web3, private_key)
   web3 = connect_to_web3(REDDIO_RPC_URL)
   
   balance_wei = web3.eth.get_balance(account.address)
@@ -35,8 +37,9 @@ def send_eth(account, amount):
   txStatus = "Success" if receipt.status == 1 else "Failed"
   print(f"Transaction hash: {receipt.transactionHash.hex()} ({txStatus})")
   
-def bridge_eth(account, amount_eth):
+def bridge_eth(private_key, amount_eth):
   
+  account = get_account(web3, private_key)
   print(f"Bridge {amount_eth} ETH from Sepolia to Reddio ({account.address})")
   
   web3 = connect_to_web3(SEPOLIA_RPC_URL)
@@ -89,9 +92,11 @@ if __name__ == "__main__":
     account = get_account(web3, private_key)
     send_amount = random_between(0.1, 1)
     print(f"Sending {send_amount} RED to {account.address}")
-    send_eth(account, send_amount)
+    send_eth(private_key, send_amount)
     bridge_amount = random_between(0.01, 0.02)
-    bridge_eth(account, bridge_amount)
+    bridge_eth(private_key, bridge_amount)
+    if REDDIO_DEPLOY_CONTRACT == True:
+      deploy_contract(private_key)
     print(f"______________{i}____________________\n")
 
   

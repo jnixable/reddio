@@ -1,6 +1,13 @@
 import random
 import time
 from web3 import Web3
+import string
+
+def generate_random_name(length):
+    if length <= 0:
+        raise ValueError("Length must be a positive integer.")
+    
+    return ''.join(random.choices(string.ascii_lowercase, k=length))
 
 def random_between(min, max):
     delta = (max - min) * (random.random() % 10)

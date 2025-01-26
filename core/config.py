@@ -5,6 +5,8 @@ REDDIO_RPC_URL="https://reddio-dev.reddio.com"
 REDDIO_CHAIN_ID=50341
 REDDIO_COIN_NAME="RED"
 
+REDDIO_DEPLOY_CONTRACT = False
+
 # Sepolia
 SEPOLIA_RPC_URL="https://endpoints.omniatech.io/v1/eth/sepolia/public"
 SEPOLIA_CHAIN_ID=11155111
