@@ -39,10 +39,10 @@ def send_eth(private_key, amount):
   
 def bridge_eth(private_key, amount_eth):
   
+  web3 = connect_to_web3(SEPOLIA_RPC_URL)
   account = get_account(web3, private_key)
   print(f"Bridge {amount_eth} ETH from Sepolia to Reddio ({account.address})")
   
-  web3 = connect_to_web3(SEPOLIA_RPC_URL)
   
   balance_wei = web3.eth.get_balance(account.address)
   balance_eth = web3.from_wei(balance_wei, 'ether')
