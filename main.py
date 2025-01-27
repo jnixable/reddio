@@ -7,8 +7,8 @@ from core.utils import connect_to_web3, generate_random_name, get_account, rando
 
 def send_eth(private_key, amount): 
   
-  account = get_account(web3, private_key)
   web3 = connect_to_web3(REDDIO_RPC_URL)
+  account = get_account(web3, private_key)
   
   balance_wei = web3.eth.get_balance(account.address)
   balance_eth = web3.from_wei(balance_wei, 'ether')
